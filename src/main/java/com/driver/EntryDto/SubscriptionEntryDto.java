@@ -8,7 +8,8 @@ public class SubscriptionEntryDto {
     private int userId;
     private SubscriptionType subscriptionType;
     private int noOfScreensRequired;
-
+    public SubscriptionEntryDto() {;
+    }
     public SubscriptionEntryDto(int userId, SubscriptionType subscriptionType, int noOfScreensRequired) {
         this.userId = userId;
         this.subscriptionType = subscriptionType;

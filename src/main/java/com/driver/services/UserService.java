@@ -35,9 +35,30 @@ public class UserService {
         //and then check for each webseries if the user can watch it or not
         //If the user is not present in the DB then return 0
 
+        User user = userRepository.findById(userId).orElse(null);
+        if(user == null){
+            return 0;
+        }
+        List<WebSeries> webSeriesList = webSeriesRepository.findAll();
+        int count = 0;
+        int userAge = user.getAge();
+        SubscriptionType userSubscription = user.getSubscription().getSubscriptionType();
+        for(WebSeries webSeries : webSeriesList){
+            if(webSeries.getAgeLimit() <= user.getAge()){
+                System.out.println("Age Limit: " + webSeries.getAgeLimit() + ", User Age: " + user.getAge());
+                System.out.println("User Subscription: " + userSubscription + ", WebSeries Subscription: " + webSeries.getSubscriptionType());
+                if(userSubscription == SubscriptionType.BASIC && webSeries.getSubscriptionType() == SubscriptionType.BASIC){
+                    count++;
+                } else if(userSubscription == SubscriptionType.PRO && (webSeries.getSubscriptionType() == SubscriptionType.BASIC || webSeries.getSubscriptionType() == SubscriptionType.PRO)){
+                    count++;
+                } else if(userSubscription == SubscriptionType.ELITE){
+                    count++;
+                }
+            }
+        }
 
 
-        return 0;
+        return count;
     }
 
 
