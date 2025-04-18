@@ -63,9 +63,7 @@ public class SubscriptionService {
             throw new Exception("User not found");
         }
         Subscription subscription = subscriptionRepository.findById(user.getId()).orElse(null);
-        if(subscription == null){
-            throw new Exception("Subscription not found");
-        }
+        assert subscription != null;
         if(subscription.getSubscriptionType() == SubscriptionType.ELITE){
             throw new Exception("Already the best Subscription");
         }
