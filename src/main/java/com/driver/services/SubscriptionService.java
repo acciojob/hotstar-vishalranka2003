@@ -57,7 +57,7 @@ public class SubscriptionService {
         //and return the difference of price
         //Hint: use findById function from the SubscriptionDb
         int difference = 0;
-        int differencePerScreen = 0;
+//        int differencePerScreen = 0;
         User user = userRepository.findById(userId).orElse(null);
         if(user == null) {
             throw new Exception("User not found");
@@ -69,16 +69,17 @@ public class SubscriptionService {
         }
         if(subscription.getSubscriptionType() == SubscriptionType.BASIC){
             difference = 300;
-            differencePerScreen = 50;
+//            differencePerScreen = 50;
             subscription.setSubscriptionType(SubscriptionType.PRO);
 
         } else if(subscription.getSubscriptionType() == SubscriptionType.PRO){
             difference = 200;
-            differencePerScreen = 100;
+//            differencePerScreen = 100;
             subscription.setSubscriptionType(SubscriptionType.ELITE);
         }
-        int overallDifference = difference + differencePerScreen * subscription.getNoOfScreensSubscribed();
-        subscription.setTotalAmountPaid(subscription.getTotalAmountPaid()+overallDifference);
+//        int overallDifference = difference + differencePerScreen * subscription.getNoOfScreensSubscribed();
+//        subscription.setTotalAmountPaid(subscription.getTotalAmountPaid()+overallDifference);
+        subscription.setTotalAmountPaid(subscription.getTotalAmountPaid()+difference);
         subscriptionRepository.save(subscription);
 
         return difference;
